@@ -1,0 +1,12 @@
+---
+- name: Update hosts
+  hosts: fedora
+  become: yes
+
+  tasks:
+    - name: Update Fedora hosts
+      dnf:
+        update_cache: yes
+        name: "*"
+        state: latest
+      when: ansible_facts.distribution == "Fedora"
