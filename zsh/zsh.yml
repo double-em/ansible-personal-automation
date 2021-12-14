@@ -1,0 +1,25 @@
+---
+- hosts: local
+  become: yes
+
+  tasks:
+    - name: (Fedora) Install ZSH
+      dnf:
+        name: "zsh"
+        state: latest
+      when: ansible_facts.distribution == "Fedora"
+
+    - name: Clone Oh My ZSH GitHub repository
+      git:
+        repo: https://github.com/ohmyzsh/ohmyzsh.git
+        dest: ~/.oh-my-zsh
+        clone: yes
+        update: yes
+
+    - name: Set ZSH as default shell
+      command: "chsh -s $(which zsh)"
+
+    - name: Copy .zshrc config
+      copy:
+        src: .zshrc
+        dest: $HOME/.zshrc
