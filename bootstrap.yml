@@ -1,0 +1,6 @@
+---
+- hosts: localhost
+  become: yes
+  roles:
+    - { role: packages, packages: ["git", "openssh", "inetutils"] }
+    - { role: services, services: ["sshd"] }
