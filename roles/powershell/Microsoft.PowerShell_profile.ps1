@@ -31,13 +31,13 @@ Function g_add {git add .}
 Set-Alias -Name gadd -Value g_add
 
 # CD
-Function cd_re {cd $HOME/source/repos}
+Function cd_re {Set-Location $HOME/source/repos}
 Set-Alias -Name cdre -Value cd_re
 
-Function cd_de {cd $HOME/Desktop}
+Function cd_de {Set-Location $HOME/Desktop}
 Set-Alias -Name cdde -Value cd_de
 
-Function cd_do {cd $HOME/Downloads}
+Function cd_do {Set-Location $HOME/Downloads}
 Set-Alias -Name cddo -Value cd_do
 
 # Terminal
@@ -46,3 +46,5 @@ Set-Alias -Name ll -Value ls_a
 
 Import-Module oh-my-posh
 Set-PoshPrompt -Theme spaceship
+
+Import-Module -Name Terminal-Icons
