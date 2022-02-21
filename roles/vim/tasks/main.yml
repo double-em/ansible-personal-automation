@@ -1,0 +1,66 @@
+---
+- name: Ensure system tasks are tagged
+  become: true
+  tags:
+    - vim
+  block:
+    - name: Ensure Neovim and dependencies are installed
+      pacman:
+        name: "{{ packages }}"
+        state: latest
+      vars:
+        packages:
+          - neovim
+          - python-neovim
+          - python-psutil
+          - python-pip
+          - bash-language-server
+      when: ansible_facts.distribution == 'Archlinux'
+
+    - name: Ensure Neovim and dependencies are installed
+      pacman:
+        name: "{{ packages }}"
+        state: latest
+      vars:
+        packages:
+          - xsel
+      when:
+        - ansible_facts.distribution == 'Archlinux'
+        - display_server == 'x11'
+
+- name: Ensure dependencies for linter plugins are installed
+  become_user: aur_builder
+  aur:
+    name: hadolint-bin
+  when: ansible_facts.distribution == 'Archlinux'
+
+- name: Ensure Neovim language servers are installed
+  pacman:
+    name: "{{ packages }}"
+    state: latest
+  vars:
+    packages:
+      - bash-language-server
+      - pyright
+      - jdk11-openjdk
+      - vscode-css-languageserver
+      - vscode-html-languageserver
+      - vscode-json-languageserver
+      - yaml-language-server
+  when: ansible_facts.distribution == 'Archlinux'
+
+- name: Ensure correct Java version to install groovy-language-server-git
+  command: "archlinux-java set java-11-openjdk"
+
+- name: Ensure Neovim language servers are installed (from AUR)
+  become_user: aur_builder
+  aur:
+    name: "{{ packages }}"
+  vars:
+    packages:
+      - ansible-language-server
+      - dockerfile-language-server
+      - terraform-ls
+      - vim-language-server
+      - groovy-language-server-git
+  when: ansible_facts.distribution == 'Archlinux'
