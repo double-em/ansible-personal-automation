@@ -32,61 +32,60 @@ else {
 
 
 
-# "Cloning  Nerd Fonts repository..."
-# $tmpExists = Test-Path $HOME/tmp
-# if (!$tmpExists) {
-#     mkdir -p $HOME/tmp
+"Cloning  Nerd Fonts repository..."
+$tmpExists = Test-Path $HOME/tmp
+if (!$tmpExists) {
+    mkdir -p $HOME/tmp
+}
+
+$fontsExists = Test-Path $HOME/tmp/nerd-fonts
+if ($fontsExists) {
+    "Existing fonts where found, Skipping!`n"
+}
+else {
+    $null = git clone https://github.com/ryanoasis/nerd-fonts.git $HOME/tmp/nerd-fonts
+    "Done!`n"
+}
+
+# "Downloading FiraCode Nerd Font Mono"
+# curl -L -o $HOME/tmp/"Fura Mono Regular Nerd Font Complete Windows Compatible.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraMono/Regular/complete/Fura%20Mono%20Regular%20Nerd%20Font%20Complete%20Windows%20Compatible.otf
+# "Done!"
+
+# "Installing FiraCode Nerd Font Mono"
+# $font = Get-ChildItem $HOME/tmp/ -Filter "Fura Mono Regular*.otf" -Recurse
+
+# "Install fonts"
+# $fonts = (New-Object -ComObject Shell.Application).Namespace(0x14)
+# foreach ($file in Get-ChildItem *.otf)
+# {
+#     $fileName = $file.Name
+#     if (-not(Test-Path -Path "C:\Windows\fonts\$fileName" )) {
+#         Write-Output $fileName
+#         Get-ChildItem $file | ForEach-Object{ $fonts.CopyHere($_.fullname) }
+#     }
 # }
+# Copy-Item *.otf c:\windows\fonts\
 
-# $fontsExists = Test-Path $HOME/tmp/nerd-fonts
-# if ($fontsExists) {
-#     "Existing fonts where found, Skipping!`n"
-# }
-# else {
-#     $null = git clone https://github.com/ryanoasis/nerd-fonts.git $HOME/tmp/nerd-fonts
-#     "Done!`n"
-# }
+"Installing FiraCode patched font..."
+$installScriptExists = Test-Path $HOME/tmp/nerd-fonts/install.ps1
+if ($installScriptExists) {
+    ./$HOME/tmp/nerd-fonts/install.ps1 FiraCode
+    "Done!`n"
+}
+else {
+    "Install Script could not be found. Recloning Nerd Fonts repository..."
+    Remove-Item -R -Force $HOME/tmp/nerd-fonts
+    $null = git clone https://github.com/ryanoasis/nerd-fonts.git $HOME/tmp/nerd-fonts
 
-"Downloading FiraCode Nerd Font Mono"
-curl -L -o $HOME/tmp/"Fura Mono Regular Nerd Font Complete Windows Compatible.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/FiraMono/Regular/complete/Fura%20Mono%20Regular%20Nerd%20Font%20Complete%20Windows%20Compatible.otf
-"Done!"
-
-"Installing FiraCode Nerd Font Mono"
-$font = Get-ChildItem $HOME/tmp/ -Filter "Fura Mono Regular*.otf" -Recurse
-
-"Install fonts"
-$fonts = (New-Object -ComObject Shell.Application).Namespace(0x14)
-foreach ($file in Get-ChildItem *.otf)
-{
-    $fileName = $file.Name
-    if (-not(Test-Path -Path "C:\Windows\fonts\$fileName" )) {
-        Write-Output $fileName
-        Get-ChildItem $file | ForEach-Object{ $fonts.CopyHere($_.fullname) }
+    "Retrying installing FiraCode patched font..."
+    ./$HOME/tmp/nerd-fonts/install.ps1 FiraCode
+    if ($?) {
+        "Done!`n"
+    }
+    else {
+        "ERROR! Could not install font!`n"
     }
 }
-Copy-Item *.otf c:\windows\fonts\
-
-
-# "Installing FiraCode patched font..."
-# $installScriptExists = Test-Path $HOME/tmp/nerd-fonts/install.ps1
-# if ($installScriptExists) {
-#     ./$HOME/tmp/nerd-fonts/install.ps1 FiraCode
-#     "Done!`n"
-# }
-# else {
-#     "Install Script could not be found. Recloning Nerd Fonts repository..."
-#     Remove-Item -R -Force $HOME/tmp/nerd-fonts
-#     $null = git clone https://github.com/ryanoasis/nerd-fonts.git $HOME/tmp/nerd-fonts
-
-#     "Retrying installing FiraCode patched font..."
-#     ./$HOME/tmp/nerd-fonts/install.ps1 FiraCode
-#     if ($?) {
-#         "Done!`n"
-#     }
-#     else {
-#         "ERROR! Could not install font!`n"
-#     }
-# }
 
 
 
