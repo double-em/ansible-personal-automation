@@ -1,27 +1,6 @@
 ---
-- hosts: all
+- hosts: localhost
   become: yes
   roles:
-    - sudo
-    - facts
-    - kernel
-    - modules
-    - locale
-    - aur-helper
-    - bootloader
-    - mounts
-    - networking
-    - users
-    - cron
-    - pacman
     - { role: packages, packages: ["git", "openssh", "inetutils"] }
     - { role: services, services: ["sshd"] }
-    - {
-        role: virtualbox-guest,
-        when: ansible_virtualization_type == 'virtualbox',
-      }
-
-- hosts: laptop
-  become: yes
-  roles:
-    - { role: networking, wireless: true }

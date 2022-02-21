@@ -9,6 +9,12 @@
         state: latest
       when: ansible_facts.distribution == "Fedora"
 
+    - name: (Arch) Install ZSH
+      pacman:
+        name: zsh
+        state: latest
+      when: ansible_facts.distribution == "Archlinux"
+
     - name: Clone Oh My ZSH GitHub repository
       git:
         repo: https://github.com/ohmyzsh/ohmyzsh.git

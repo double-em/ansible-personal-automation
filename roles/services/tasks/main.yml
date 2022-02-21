@@ -1,0 +1,17 @@
+---
+- name: Reload systemd
+  become: yes
+  systemd:
+    daemon_reload: yes
+  tags:
+    - services
+
+- name: Enable services
+  become: yes
+  systemd:
+    name: "{{ item }}"
+    enabled: yes
+  with_items:
+    - "{{ services }}"
+  tags:
+    - services

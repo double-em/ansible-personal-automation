@@ -1,0 +1,23 @@
+---
+- hosts: local
+  become: yes
+
+  tasks:
+    - name: Install Oh My POSH
+      command: Import-Module oh-my-posh
+      when: ansible_facts.distribution == "Windows"
+
+    - name: Copy profile.ps1 config
+      copy:
+        src: Microsoft.PowerShell_profile.ps1
+        dest: $PROFILE
+
+    - name: Clone Oh My ZSH GitHub repository
+      git:
+        repo: https://github.com/devblackops/Terminal-Icons.git
+        dest: ~/source/repos
+        clone: yes
+        update: yes
+
+    - name: Set ZSH as default shell
+      command: "chsh -s $(which zsh)"
