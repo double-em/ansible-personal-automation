@@ -1,0 +1,6 @@
+---
+skip_list:
+  - ANSIBLE0010
+  - ANSIBLE0012
+  - ANSIBLE0013
+  - package-latest

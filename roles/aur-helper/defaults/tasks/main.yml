@@ -1,0 +1,12 @@
+---
+- name: Check if package "{{ aur_pkg_helper }}" is installed
+  stat:
+    path: "{{ aur_pkg_helper_path }}"
+  register: stat_pkg
+  changed_when: false
+
+- name: Build "{{ aur_pkg_helper }}"
+  include_tasks: build.yml
+  when: not stat_pkg.stat.exists
+  tags:
+    - aur-helper
