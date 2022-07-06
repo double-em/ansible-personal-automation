@@ -112,14 +112,14 @@
   tags:
       - fonts
 
-- name: Check if Mononoki is installed
+- name: Check if Hack font is installed
   stat:
-      path: "{{ ansible_user_dir }}/.local/share/fonts/mononoki Bold Italic Nerd Font Complete Mono.ttf"
+      path: "{{ ansible_user_dir }}/.local/share/fonts/Hack Regular Nerd Font Complete Mono.ttf"
   register: font_stat
   tags:
       - fonts
 
-- name: Find latest release of nerd font patched mononoki
+- name: Find latest release of Nerd Font
   uri:
       url: https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest
       return_content: true
@@ -129,7 +129,7 @@
   tags:
       - fonts
 
-- name: Download latest release of nerd font patched mononoki
+- name: Download latest release of Nerd Font patched Hack
   unarchive:
       src: "{{ item.browser_download_url }}"
       dest: "{{ ansible_user_dir }}/.local/share/fonts/"
@@ -139,7 +139,7 @@
   loop: "{{ json_response.json.assets }}"
   when:
       - json_response.json is defined
-      - item.name == 'Mononoki.zip'
+      - item.name == 'Hack.zip'
       - font_stat.stat.exists is defined and not font_stat.stat.exists
   notify:
       - Update font cache
