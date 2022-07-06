@@ -1,0 +1,20 @@
+---
+- name: "Install '{{ group }}': {{ package_groups[group]|join(', ') }}"
+  become: true
+  apt:
+      state: latest
+      name: "{{ package_groups[group] }}"
+  when:
+      - group is defined
+      - package_groups[group] is defined
+
+- name: "Install Snap '{{ group }}': {{ snap_package_groups[group]|join(', ') }}"
+  become: true
+  snap:
+      name: "{{ snap_package_groups[group] }}"
+      state: present
+      channel: stable
+      classic: true
+  when:
+      - group is defined
+      - snap_package_groups[group] is defined

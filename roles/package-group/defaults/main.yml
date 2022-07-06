@@ -1,0 +1,59 @@
+---
+package_groups:
+    base_utils:
+        - bash
+        - bzip2
+        - fzf
+        - gzip
+        - htop
+        - wget
+        - tree
+        - zip
+        - man-db
+    system_utils:
+        - glances
+        - iotop
+        - inotify-tools
+        - sysfsutils
+        - pciutils
+        - zsh-autosuggestions
+        - zsh-syntax-highlighting
+        - usbutils
+        - ethtool
+    development_utils:
+        - ansible
+        - ansible-lint
+        - autoconf
+        - automake
+        - cmake
+        - dkms
+        - fakeroot
+        - gcc
+        - pkg-config
+        - eslint
+        - jq
+        - packer
+        - npm
+        - nodejs
+    net_utils:
+        - bridge-utils
+        - curl
+        - fping
+        - nmap
+        - net-tools
+        - iproute2
+        - unzip
+        - whois
+        - traceroute
+    desktop:
+        - xdg-utils
+        - ruby
+        - python-pip
+        - gimp
+        - sshpass
+
+snap_package_groups:
+    development_utils:
+        - kubectl
+        - kubectx
+        - terraform

@@ -1,6 +1,11 @@
 ---
 - hosts: localhost
+  connection: local
   become: yes
   roles:
-    - { role: packages, packages: ["git", "openssh", "inetutils"] }
-    - { role: services, services: ["sshd"] }
+      - { role: packages, packages: ["git", "openssh-server", "openssh-client", "net-tools"] }
+#      - { role: services, services: ["sshd"] }
+#- hosts: laptop
+#  become: yes
+#  roles:
+#      - { role: networking, wireless: true }
