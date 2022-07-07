@@ -112,10 +112,14 @@
   tags:
       - fonts
 
-- name: Check if Hack font is installed
+- name: Check if fonts are installed
   stat:
-      path: "{{ ansible_user_dir }}/.local/share/fonts/Hack Regular Nerd Font Complete Mono.ttf"
+      path: "{{ ansible_user_dir }}/.local/share/fonts/{{ item }} Regular Nerd Font Complete Mono.ttf"
   register: font_stat
+  loop:
+      - Hack
+      - OpenSans
+      - FireCode
   tags:
       - fonts
 
@@ -129,7 +133,7 @@
   tags:
       - fonts
 
-- name: Download latest release of Nerd Font patched Hack
+- name: Download latest release of Nerd Font patched
   unarchive:
       src: "{{ item.browser_download_url }}"
       dest: "{{ ansible_user_dir }}/.local/share/fonts/"
@@ -139,9 +143,14 @@
   loop: "{{ json_response.json.assets }}"
   when:
       - json_response.json is defined
-      - item.name == 'Hack.zip'
+      - item.name == '{{ font_stat.item }}.zip'
       - font_stat.stat.exists is defined and not font_stat.stat.exists
   notify:
       - Update font cache
+  vars:
+      fonts:
+          - Hack
+          - OpenSans
+          - FiraCode
   tags:
       - fonts
