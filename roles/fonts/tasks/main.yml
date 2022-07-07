@@ -133,7 +133,7 @@
   tags:
       - fonts
 
-- name: Download latest release of Nerd Font patched
+- name: Download latest release of patched Nerd Font
   unarchive:
       src: "{{ item.browser_download_url }}"
       dest: "{{ ansible_user_dir }}/.local/share/fonts/"
